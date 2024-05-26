@@ -9,7 +9,7 @@ typedef struct no {
 
 NoArv *criar() {
   NoArv *no;
-  no = malloc(sizeof(NoArv)); // altera o conte�do da raiz direto da main
+  no = malloc(sizeof(NoArv));//altera o conte�do da raiz direto da main
   no->valor = 0;
   no->direita = NULL;
   no->esquerda = NULL;
