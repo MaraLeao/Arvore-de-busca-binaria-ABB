@@ -65,13 +65,61 @@ void esvaziar(NoArv **raiz) { //esvazia a arvore
     }
 }
 
+//Remover
+NoArv* remover(NoArv *raiz, int chave) {
+    if(raiz == NULL) {
+        printf ("O valor não pode ser encontrado \n");
+        return NULL;
+    } else {
+        if (raiz->valor == chave){
+            // Remover um no sem filho
+            if (raiz->esquerda == NULL && raiz->direita == NULL){
+                free(raiz);
+                printf("Folha removida : %d !\n", chave);
+                return NULL;
+            }
+            else{
+                // Remover nós com um ou mais filhos
+                if(raiz->esquerda != NULL && raiz-> direita != NULL){
+                    NoArv *pontaux = raiz->esquerda;
+                    while(pontaux->direita!=NULL)
+                    pontaux = pontaux->direita;
+                    raiz->valor = pontaux->valor;
+                    pontaux->valor = chave;
+                    raiz->esquerda = remover(raiz->esquerda, chave);
+                    return raiz;
+                }
+                else{
+                    //remover no com apenas um filho
+                    NoArv *pontaux;
+                    if(raiz->esquerda != NULL){
+                        pontaux = raiz->esquerda;
+                    }
+                    else {
+                        pontaux = raiz->direita;
+                        free(raiz);
+                        return pontaux;
+                    }
+                }
+            }
+        }   
+        else {
+            if(chave < raiz->valor)
+            raiz->esquerda = remover(raiz->esquerda,chave);
+            else
+            raiz->esquerda = remover(raiz->direita,chave);
+            return raiz;
+        }
+    }
+}
+
 int main () {
 
     NoArv *busca, *raiz = NULL;
     int opcao,valor;
 
     do {
-        printf("\n\t0 - Sair\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n");
+        printf("\n\t0 - Sair\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\tt4 - Remover\n");
         scanf("%d", &opcao);
 
         switch(opcao) {
@@ -96,7 +144,16 @@ int main () {
                 }
 
                 break;
-            case 4:
+                
+            case 4:  
+                printf("\t");
+                mostrar_v2(raiz);
+                printf("\n\tDigite o número que deseja remover: ");
+                scanf("%d", &valor);
+                raiz = remover(raiz,valor);
+                break;    
+                
+            case 5:
                 esvaziar(&raiz);
                 printf("\n\tArvore esvaziada!\n");
                 break;
