@@ -130,9 +130,18 @@ int main() {
   int opcao, valor;
 
   do {
-    printf("\n\t0 - Sair\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t4 - "
-           "Remover\n\t5 - Esvaziar\n\t6 - Exibir Pre-Ordem\n\t7 - Exibir "
-           "In-Ordem\n\t8 - Exibir Pos-Ordem\n");
+      
+    printf("\n-----Menu----\n");
+    printf("0. Sair\n");
+    printf("1. Inserir número\n");
+    printf("2. Imprimir Arvore\n");
+    printf("3. Buscar na Arvore\n");
+    printf("4. Remover\n");
+    printf("5. Esvaziar\n");
+    printf("6. Exibir Pre-Ordem\n");
+    printf("7. Exibir In-Ordem\n");
+    printf("8. Exibir Pos-Ordem\n");
+    printf("Escolha uma opção: ");
     scanf("%d", &opcao);
 
     switch (opcao) {
