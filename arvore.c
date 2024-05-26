@@ -65,13 +65,48 @@ void esvaziar(NoArv **raiz) { //esvazia a arvore
     }
 }
 
+//Remover
+NoArv* remover(NoArv *raiz, int chave) {
+    if (raiz == NULL) {
+        printf("O valor não pode ser encontrado.\n");
+        return NULL;
+    } else {
+        if (raiz->valor == chave) {
+            if (raiz->esquerda == NULL && raiz->direita == NULL) {
+                free(raiz);
+                printf("Folha removida: %d!\n", chave);
+                return NULL;
+            } else if (raiz->esquerda != NULL && raiz->direita != NULL) {
+                NoArv *pontaux = raiz->esquerda;
+                while (pontaux->direita != NULL) {
+                    pontaux = pontaux->direita;
+                }
+                raiz->valor = pontaux->valor;
+                raiz->esquerda = remover(raiz->esquerda, raiz->valor);
+                return raiz;
+            } else {
+                NoArv *temp = raiz->esquerda ? raiz->esquerda : raiz->direita;
+                free(raiz);
+                return temp;
+            }
+        } else {
+            if (chave < raiz->valor) {
+                raiz->esquerda = remover(raiz->esquerda, chave);
+            } else {
+                raiz->direita = remover(raiz->direita, chave);
+            }
+            return raiz;
+        }
+    }
+}
+
 int main () {
 
     NoArv *busca, *raiz = NULL;
     int opcao,valor;
 
     do {
-        printf("\n\t0 - Sair\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n");
+        printf("\n\t0 - Sair\n\t1 - Inserir\n\t2 - Imprimir\n\t3 - Buscar\n\t4 - Remover\n");
         scanf("%d", &opcao);
 
         switch(opcao) {
@@ -96,7 +131,16 @@ int main () {
                 }
 
                 break;
-            case 4:
+                
+            case 4:  
+                printf("\t");
+                mostrar_v2(raiz);
+                printf("\n\tDigite o número que deseja remover: ");
+                scanf("%d", &valor);
+                raiz = remover(raiz,valor);
+                break;    
+                
+            case 5:
                 esvaziar(&raiz);
                 printf("\n\tArvore esvaziada!\n");
                 break;
